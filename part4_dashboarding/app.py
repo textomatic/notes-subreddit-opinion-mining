@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 from wordcloud import WordCloud, STOPWORDS
 import requests
+import os
 import praw
 
 
@@ -16,7 +17,7 @@ def get_mentioned_threads():
     submissions = result['data']
     
     if len(submissions) > 0:
-        reddit = praw.Reddit("goodnotes")
+        reddit = praw.Reddit(client_id=os.environ['reddit_client_id'], client_secret=os.environ['reddit_client_secret'], user_agent=os.environ['reddit_user_agent'])
         subreddit, created, title, content, num_comments, url = [], [], [], [], [], []
 
         for submission in submissions:
@@ -72,6 +73,7 @@ def display_threads(df):
 
 
 if __name__ == '__main__':
+    st.set_page_config(page_title='GoodNotes Subreddit Threads Dashboard', layout='centered')
     st.title('Subreddit Threads Dashboard')
 
     st.header('Threads mentioning GoodNotes in other competitor subreddits')
