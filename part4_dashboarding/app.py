@@ -42,7 +42,8 @@ def get_mentioned_threads():
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True)
 def load_data():
-    df = pd.read_csv('./data/tagged_threads.csv').reset_index(drop=True)
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    df = pd.read_csv(dir_path + '/data/tagged_threads.csv').reset_index(drop=True)
     df = df.sort_values(by=['score'], ascending=False).reset_index(drop=True)
     return df
 
